@@ -6,6 +6,7 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.action_chains import ActionChains
 from pprint import pprint
+from openlocationcode import openlocationcode as olc
 
 # gmaps starts their weeks on sunday
 days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
@@ -29,7 +30,8 @@ for i in range(20):
     print(f"Clicking on {place.get_attribute('aria-label')}")
     place.click()
     code = driver.find_element_by_css_selector("button[data-tooltip='Copy plus code']").text
-    print(code)
+    codeArea = olc.decode(olc.recoverNearest(code.split()[0], -36.84840987798827, 174.7621911279435))
+    print(code, codeArea.latitudeCenter, codeArea.longitudeCenter)
     address = None
     try:
         address = driver.find_element_by_css_selector("button[data-tooltip='Copy address']").get_attribute("aria-label").split(":")[-1].strip()
