@@ -22,7 +22,7 @@ OUTFILE = "data.geojson"
 chrome_options = Options()
 chrome_options.add_argument("--headless")
 driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
-driver.implicitly_wait(5)
+driver.implicitly_wait(10)
 driver.get("https://www.google.com/maps/search/place+of+interest/@-36.8508578,174.7615744,15z/data=!3m1!4b1")
 
 def pprint_times(times):
@@ -38,6 +38,17 @@ if os.path.isfile(OUTFILE):
         features = data["features"]
         print(f"Loaded {len(features)} features")
         seen_links = [d["properties"]["link"] for d in features]
+
+def retryClick(elem, retry_limit=5, sleep=1):
+    retry = 0
+    try:
+        elem.click()
+    except ElementClickInterceptedException:
+        retry += 1
+        if retry < retry_limit:
+            time.sleep(sleep)
+        else:
+            raise
 
 def extract_page():
     placesNeedsRefresh = True
@@ -59,7 +70,8 @@ def extract_page():
             print(f"Skipping {name}")
             continue
         print(f"Clicking on {name}")
-        place.click()
+        retry = 0
+        retryClick(place)
         placesNeedsRefresh = True
         approx_ll = re.search(f'(?P<lat>-?\d+\.\d+).+?(?P<lng>-?\d+\.\d+)', link).groupdict()
         lat = float(approx_ll["lat"])
@@ -130,24 +142,19 @@ def extract_page():
         }
         #print(feature)
         features.append(feature)
-        driver.find_element_by_xpath('//button/span[text()="Back to results"]').click()
+        retryClick(driver.find_element_by_xpath('//button/span[text()="Back to results"]'))
 
 retry = 0
 while True:
     try:
         extract_page()
         try:
-            driver.find_element_by_css_selector("button[aria-label=' Next page ']").click()
+            retryClick(driver.find_element_by_css_selector("button[aria-label=' Next page ']"))
             print("Going to next page")
+            time.sleep(2)
         except NoSuchElementException:
             print("All done!")
             break
-        except ElementClickInterceptedException:
-            retry += 1
-            if retry > 5:
-                raise
-            else:
-                time.sleep(1)
     except Exception as e:
         print(f"ERROR: {e}")
         traceback.print_exc()
