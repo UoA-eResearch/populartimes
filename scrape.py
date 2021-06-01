@@ -59,7 +59,7 @@ def extract_page():
             print(f"Skipping {name}")
             continue
         print(f"Clicking on {name}")
-        driver.find_element_by_css_selector(f"a[href='{link}']").click()
+        place.click()
         placesNeedsRefresh = True
         approx_ll = re.search(f'(?P<lat>-?\d+\.\d+).+?(?P<lng>-?\d+\.\d+)', link).groupdict()
         lat = float(approx_ll["lat"])
