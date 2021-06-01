@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
+from selenium.common.exceptions import *
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.action_chains import ActionChains
@@ -22,6 +22,7 @@ OUTFILE = "data.geojson"
 chrome_options = Options()
 chrome_options.add_argument("--headless")
 driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
+driver.maximize_window()
 driver.implicitly_wait(10)
 driver.get("https://www.google.com/maps/search/place+of+interest/@-36.8508578,174.7615744,15z/data=!3m1!4b1")
 
@@ -39,26 +40,21 @@ if os.path.isfile(OUTFILE):
         print(f"Loaded {len(features)} features")
         seen_links = [d["properties"]["link"] for d in features]
 
-def retryClick(elem, retry_limit=5, sleep=1):
-    retry = 0
+def click(elem):
     try:
         elem.click()
     except ElementClickInterceptedException:
-        retry += 1
-        if retry < retry_limit:
-            time.sleep(sleep)
-        else:
-            raise
+        driver.execute_script("arguments[0].click();", elem)
 
 def extract_page():
     placesNeedsRefresh = True
     for i in tqdm(range(20)):
-        scrollCount = 0
         if placesNeedsRefresh:
             places = []
+            scrollCount = 0
             while len(places) < 20 and scrollCount < 10:
                 scrollCount += 1
-                #print("scrolling")
+                print("scrolling")
                 driver.execute_script("arguments[0].scrollTo(0, arguments[0].scrollHeight)", driver.find_element_by_css_selector("div[aria-label='Results for place of interest']"))
                 time.sleep(1)
                 places = driver.find_elements_by_css_selector("div[aria-label='Results for place of interest'] a[aria-label]")
@@ -71,7 +67,7 @@ def extract_page():
             continue
         print(f"Clicking on {name}")
         retry = 0
-        retryClick(place)
+        click(place)
         placesNeedsRefresh = True
         approx_ll = re.search(f'(?P<lat>-?\d+\.\d+).+?(?P<lng>-?\d+\.\d+)', link).groupdict()
         lat = float(approx_ll["lat"])
@@ -142,14 +138,23 @@ def extract_page():
         }
         #print(feature)
         features.append(feature)
-        retryClick(driver.find_element_by_xpath('//button/span[text()="Back to results"]'))
+        for retry in range(5):
+            try:
+                driver.find_element_by_xpath('//button/span[text()="Back to results"]').click()
+                break
+            except:
+                print(retry)
+                if retry == 4:
+                    raise
+                else:
+                    time.sleep(retry)
 
 retry = 0
 while True:
     try:
         extract_page()
         try:
-            retryClick(driver.find_element_by_css_selector("button[aria-label=' Next page ']"))
+            click(driver.find_element_by_css_selector("button[aria-label=' Next page ']"))
             print("Going to next page")
             time.sleep(2)
         except NoSuchElementException:
@@ -162,7 +167,6 @@ while True:
             f.write(driver.page_source)
         break
 
-print(f"Extracted {len(features)} places")
 driver.close()
 
 if features:
@@ -173,3 +177,4 @@ if features:
 
     with open(OUTFILE, "w") as f:
         json.dump(geojson, f)
+    print(f"Wrote {len(features)} places")
