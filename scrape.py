@@ -11,9 +11,11 @@ from tqdm import tqdm
 import time
 import re
 import json
+import os
 
 # gmaps starts their weeks on sunday
 days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+OUTFILE = "data.geojson"
 
 # Initialise driver
 chrome_options = Options()
@@ -27,12 +29,19 @@ def pprint_times(times):
         print(day, times[i])
 
 features = []
+seen_links = []
+
+if os.path.isfile(OUTFILE):
+    with open(OUTFILE) as f:
+        data = json.load(f)
+        features = data["features"]
+        seen_links = [d["properties"]["link"] for d in features]
 
 def extract_page():
     for i in tqdm(range(20)):
         places = []
         scrollCount = 0
-        while len(places) < 20 and scrollCount < 10:
+        while len(places) < (i + 1) and scrollCount < 10:
             scrollCount += 1
             #print("scrolling")
             driver.execute_script("arguments[0].scrollTo(0, arguments[0].scrollHeight)", driver.find_element_by_css_selector("div[aria-label='Results for place of interest']"))
@@ -40,9 +49,12 @@ def extract_page():
             places = driver.find_elements_by_css_selector("div[aria-label='Results for place of interest'] a[aria-label]")
         place = places[i]
         name = place.get_attribute('aria-label')
+        link = place.get_attribute("href")
+        if link in seen_links:
+            print(f"Skipping {name}")
+            continue
         print(f"Clicking on {name}")
         place.click()
-        link = place.get_attribute("href")
         approx_ll = re.search(f'(?P<lat>-?\d+\.\d+).+?(?P<lng>-?\d+\.\d+)', link).groupdict()
         lat = float(approx_ll["lat"])
         lng = float(approx_ll["lng"])
@@ -58,13 +70,13 @@ def extract_page():
             address = driver.find_element_by_css_selector("button[data-tooltip='Copy address']").get_attribute("aria-label").split(":")[-1].strip()
         except NoSuchElementException:
             pass
+        live_info = None
         try:
             popular = driver.find_element_by_css_selector("div.section-popular-times")
             print("Has popular times")
             times = [[0]*24 for _ in range(7)] # 2D matrix, 7 days of the week, 24h per day
             dow = 0
             hour_prev = 0
-            live_info = None
             for elem in driver.find_elements_by_css_selector("div.section-popular-times-bar"):
                 bits = elem.get_attribute("aria-label").split()
                 if bits[0] == "%":
@@ -90,26 +102,27 @@ def extract_page():
                     hour_prev = hour
                     times[dow % 7][hour] = int(bits[0].rstrip("%"))
             #pprint_times(times)
-            feature = {
-                "type": "Feature",
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [lng, lat]
-                },
-                "properties": {
-                    "name": name,
-                    "address": address,
-                    "link": link,
-                    "code": code,
-                    "live_info": live_info,
-                    "populartimes": times,
-                    "scraped_at": datetime.now().isoformat(sep=" ", timespec="seconds")
-                }
-            }
-            #print(feature)
-            features.append(feature)
         except NoSuchElementException:
-            print("No popular times available, skipping")
+            print("No popular times available")
+            times = None
+        feature = {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [lng, lat]
+            },
+            "properties": {
+                "name": name,
+                "address": address,
+                "link": link,
+                "code": code,
+                "live_info": live_info,
+                "populartimes": times,
+                "scraped_at": datetime.now().isoformat(sep=" ", timespec="seconds")
+            }
+        }
+        #print(feature)
+        features.append(feature)
         driver.find_element_by_xpath('//button/span[text()="Back to results"]').click()
 
 while True:
@@ -128,10 +141,11 @@ while True:
 print(f"Extracted {len(features)} places")
 driver.close()
 
-geojson = {
-    "type": "FeatureCollection",
-    "features": features
-}
+if features:
+    geojson = {
+        "type": "FeatureCollection",
+        "features": features
+    }
 
-with open("data.geojson", "w") as f:
-    json.dump(geojson, f)
+    with open(OUTFILE, "w") as f:
+        json.dump(geojson, f, indent=4)
