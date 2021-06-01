@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.action_chains import ActionChains
@@ -12,6 +12,7 @@ import time
 import re
 import json
 import os
+import traceback
 
 # gmaps starts their weeks on sunday
 days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
@@ -35,18 +36,22 @@ if os.path.isfile(OUTFILE):
     with open(OUTFILE) as f:
         data = json.load(f)
         features = data["features"]
+        print(f"Loaded {len(features)} features")
         seen_links = [d["properties"]["link"] for d in features]
 
 def extract_page():
+    placesNeedsRefresh = True
     for i in tqdm(range(20)):
-        places = []
         scrollCount = 0
-        while len(places) < (i + 1) and scrollCount < 10:
-            scrollCount += 1
-            #print("scrolling")
-            driver.execute_script("arguments[0].scrollTo(0, arguments[0].scrollHeight)", driver.find_element_by_css_selector("div[aria-label='Results for place of interest']"))
-            time.sleep(1)
-            places = driver.find_elements_by_css_selector("div[aria-label='Results for place of interest'] a[aria-label]")
+        if placesNeedsRefresh:
+            places = []
+            while len(places) < 20 and scrollCount < 10:
+                scrollCount += 1
+                #print("scrolling")
+                driver.execute_script("arguments[0].scrollTo(0, arguments[0].scrollHeight)", driver.find_element_by_css_selector("div[aria-label='Results for place of interest']"))
+                time.sleep(1)
+                places = driver.find_elements_by_css_selector("div[aria-label='Results for place of interest'] a[aria-label]")
+            placesNeedsRefresh = False
         place = places[i]
         name = place.get_attribute('aria-label')
         link = place.get_attribute("href")
@@ -54,7 +59,8 @@ def extract_page():
             print(f"Skipping {name}")
             continue
         print(f"Clicking on {name}")
-        place.click()
+        driver.find_element_by_css_selector(f"a[href='{link}']").click()
+        placesNeedsRefresh = True
         approx_ll = re.search(f'(?P<lat>-?\d+\.\d+).+?(?P<lng>-?\d+\.\d+)', link).groupdict()
         lat = float(approx_ll["lat"])
         lng = float(approx_ll["lng"])
@@ -65,6 +71,7 @@ def extract_page():
             lng = codeArea.longitudeCenter
         except NoSuchElementException:
             print("No plus code, latlong might be inaccurate")
+            code = None
         address = None
         try:
             address = driver.find_element_by_css_selector("button[data-tooltip='Copy address']").get_attribute("aria-label").split(":")[-1].strip()
@@ -125,6 +132,7 @@ def extract_page():
         features.append(feature)
         driver.find_element_by_xpath('//button/span[text()="Back to results"]').click()
 
+retry = 0
 while True:
     try:
         extract_page()
@@ -134,8 +142,17 @@ while True:
         except NoSuchElementException:
             print("All done!")
             break
+        except ElementClickInterceptedException:
+            retry += 1
+            if retry > 5:
+                raise
+            else:
+                time.sleep(1)
     except Exception as e:
         print(f"ERROR: {e}")
+        traceback.print_exc()
+        with open("error.html", "w") as f:
+            f.write(driver.page_source)
         break
 
 print(f"Extracted {len(features)} places")
@@ -148,4 +165,4 @@ if features:
     }
 
     with open(OUTFILE, "w") as f:
-        json.dump(geojson, f, indent=4)
+        json.dump(geojson, f)
