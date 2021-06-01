@@ -43,13 +43,16 @@ def extract_page():
         print(f"Clicking on {name}")
         place.click()
         link = place.get_attribute("href")
-        code = driver.find_element_by_css_selector("button[data-tooltip='Copy plus code']").text
         approx_ll = re.search(f'(?P<lat>-?\d+\.\d+).+?(?P<lng>-?\d+\.\d+)', link).groupdict()
-        approx_lat = float(approx_ll["lat"])
-        approx_lng = float(approx_ll["lng"])
-        codeArea = olc.decode(olc.recoverNearest(code.split()[0], approx_lat, approx_lng))
-        lat = codeArea.latitudeCenter
-        lng = codeArea.longitudeCenter
+        lat = float(approx_ll["lat"])
+        lng = float(approx_ll["lng"])
+        try:
+            code = driver.find_element_by_css_selector("button[data-tooltip='Copy plus code']").text
+            codeArea = olc.decode(olc.recoverNearest(code.split()[0], lat, lng))
+            lat = codeArea.latitudeCenter
+            lng = codeArea.longitudeCenter
+        except NoSuchElementException:
+            print("No plus code, latlong might be inaccurate")
         address = None
         try:
             address = driver.find_element_by_css_selector("button[data-tooltip='Copy address']").get_attribute("aria-label").split(":")[-1].strip()
