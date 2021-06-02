@@ -153,11 +153,11 @@ def extract_page():
 while True:
     try:
         extract_page()
-        try:
-            click(driver.find_element_by_css_selector("button[aria-label=' Next page ']"))
-            print("Going to next page")
-            time.sleep(2)
-        except NoSuchElementException:
+        click(driver.find_element_by_css_selector("button[aria-label=' Next page ']"))
+        print("Going to next page")
+        time.sleep(2)
+    except IndexError:
+        if driver.find_element_by_css_selector("button[aria-label=' Next page ']").get_attribute("disabled"):
             print("All done!")
             break
     except Exception as e:
