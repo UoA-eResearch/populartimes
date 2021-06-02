@@ -24,7 +24,7 @@ chrome_options.add_argument("--headless")
 driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
 driver.maximize_window()
 driver.implicitly_wait(10)
-driver.get("https://www.google.com/maps/search/place+of+interest/@-36.8508578,174.7615744,15z/data=!3m1!4b1")
+driver.get("https://www.google.com/maps/search/place+of+interest/@-36.9162656,174.7088314,12z")
 
 def pprint_times(times):
     for i, day in enumerate(days):
@@ -40,12 +40,6 @@ if os.path.isfile(OUTFILE):
         for feature in data["features"]:
             features[feature["properties"]["link"]] = feature
         print(f"Loaded {len(features)} features")
-
-def click(elem):
-    try:
-        elem.click()
-    except ElementClickInterceptedException:
-        driver.execute_script("arguments[0].click();", elem)
 
 def extract_page():
     placesNeedsRefresh = True
@@ -68,7 +62,7 @@ def extract_page():
             print(f"Skipping {name}")
             continue
         print(f"Clicking on {name}")
-        click(place)
+        place.click()
         placesNeedsRefresh = True
         approx_ll = re.search(f'(?P<lat>-?\d+\.\d+).+?(?P<lng>-?\d+\.\d+)', link).groupdict()
         lat = float(approx_ll["lat"])
@@ -153,13 +147,16 @@ def extract_page():
 while True:
     try:
         extract_page()
-        click(driver.find_element_by_css_selector("button[aria-label=' Next page ']"))
+        driver.find_element_by_css_selector("button[aria-label=' Next page ']").click()
         print("Going to next page")
         time.sleep(2)
     except IndexError:
         if driver.find_element_by_css_selector("button[aria-label=' Next page ']").get_attribute("disabled"):
             print("All done!")
             break
+    except KeyboardInterrupt:
+        print("Interrupted by user, will now save")
+        break
     except Exception as e:
         print(f"ERROR: {e}")
         traceback.print_exc()
