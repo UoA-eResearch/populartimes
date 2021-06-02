@@ -82,14 +82,21 @@
                     Latlong: ${d.geometry.coordinates}<br>
                     Live info: ${JSON.stringify(p.live_info)}<br>
                     Scraped at: ${p.scraped_at}<br>
-                    <div id="plot"></div>
+                    <div id="heatmap"></div>
+                    <div id="line"></div>
                 `, {minWidth: 800, data: p.populartimes})
                 if (p.populartimes) {
                     marker.on("popupopen", function(e) {
+                        var px = map.project(e.target._popup._latlng);
+                        console.log(px)
+                        px.y -= 400;
+                        map.panTo(map.unproject(px),{animate: true});
+
+                        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
                         var data = [
                             {
                                 z: e.popup.options.data,
-                                y: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+                                y: days,
                                 type: 'heatmap',
                             }
                         ];
@@ -101,9 +108,32 @@
                             yaxis: {
                                 //title: "Day"
                                 autorange: "reversed"
-                            }
+                            },
+                            height: 400,
                         }
-                        var container = $("#plot", e.popup._contentNode)[0];
+                        var container = $("#heatmap", e.popup._contentNode)[0];
+                        Plotly.newPlot(container, data, layout);
+
+                        data = []
+                        for (i in e.popup.options.data) {
+                            day = e.popup.options.data[i]
+                            data.push({
+                                name: days[i],
+                                y: day,
+                                type: 'scatter'
+                            })
+                        }
+                        var layout = {
+                            title: "Popular times line plot",
+                            xaxis: {
+                                title: "Hour",
+                            },
+                            yaxis: {
+                                title: "Popularity",
+                            },
+                            height: 400,
+                        }
+                        var container = $("#line", e.popup._contentNode)[0];
                         Plotly.newPlot(container, data, layout);
                     })
                 }
