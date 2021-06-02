@@ -24,7 +24,7 @@ chrome_options.add_argument("--headless")
 driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
 driver.maximize_window()
 driver.implicitly_wait(10)
-driver.get("https://www.google.com/maps/search/place+of+interest/@-38.2330227,172.9899424,7.25z/data=!4m2!2m1!6e1")
+driver.get("https://www.google.com/maps/search/place+of+interest/@-36.9071496,174.6820653,13.67z")
 
 def pprint_times(times):
     for i, day in enumerate(days):
