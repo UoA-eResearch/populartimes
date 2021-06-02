@@ -30,15 +30,16 @@ def pprint_times(times):
     for i, day in enumerate(days):
         print(day, times[i])
 
-features = []
+features = {}
 seen_links = []
 
 if os.path.isfile(OUTFILE):
+    # Load existing data
     with open(OUTFILE) as f:
         data = json.load(f)
-        features = data["features"]
+        for feature in data["features"]:
+            features[feature["properties"]["link"]] = feature
         print(f"Loaded {len(features)} features")
-        seen_links = [d["properties"]["link"] for d in features]
 
 def click(elem):
     try:
@@ -49,6 +50,7 @@ def click(elem):
 def extract_page():
     placesNeedsRefresh = True
     for i in tqdm(range(20)):
+        # Only refresh places if necessary. This is more efficient when skipping over already extracted places
         if placesNeedsRefresh:
             places = []
             scrollCount = 0
@@ -62,11 +64,10 @@ def extract_page():
         place = places[i]
         name = place.get_attribute('aria-label')
         link = place.get_attribute("href")
-        if link in seen_links:
+        if link in features:
             print(f"Skipping {name}")
             continue
         print(f"Clicking on {name}")
-        retry = 0
         click(place)
         placesNeedsRefresh = True
         approx_ll = re.search(f'(?P<lat>-?\d+\.\d+).+?(?P<lng>-?\d+\.\d+)', link).groupdict()
@@ -137,7 +138,7 @@ def extract_page():
             }
         }
         #print(feature)
-        features.append(feature)
+        features[link] = feature
         for retry in range(5):
             try:
                 driver.find_element_by_xpath('//button/span[text()="Back to results"]').click()
@@ -149,7 +150,6 @@ def extract_page():
                 else:
                     time.sleep(retry)
 
-retry = 0
 while True:
     try:
         extract_page()
@@ -172,7 +172,7 @@ driver.close()
 if features:
     geojson = {
         "type": "FeatureCollection",
-        "features": features
+        "features": list(features.values())
     }
 
     with open(OUTFILE, "w") as f:
