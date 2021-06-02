@@ -124,6 +124,9 @@ def extract_page(driver, features):
                     driver.execute_script("arguments[0].scrollTo(0, arguments[0].scrollHeight)", driver.find_element_by_css_selector("div[aria-label^='Results for']"))
                     time.sleep(1)
                     places = driver.find_elements_by_css_selector("div[aria-label^='Results for'] a[aria-label]")
+                if not places:
+                    print("No places")
+                    return
                 placesNeedsRefresh = False
             place = places[i]
             name = place.get_attribute('aria-label')

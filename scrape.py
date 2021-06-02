@@ -12,7 +12,7 @@ locations = iter(tqdm(df.SA22021_V1_00_NAME_ASCII))
 driver = initialise_driver()
 location = next(locations)
 location_type = 'place of interest'
-search = f"{location_type} in {location}"
+search = f"{location_type} in {location}, Auckland"
 print(search)
 driver.get(f"https://www.google.com/maps/search/{search}")
 
@@ -24,7 +24,7 @@ while True:
         extract_page(driver, features)
         if driver.find_element_by_css_selector("button[aria-label=' Next page ']").get_attribute("disabled"):
             raise IndexError
-        driver.find_element_by_css_selector("button[aria-label=' Next page ']").click()
+        click(driver, driver.find_element_by_css_selector("button[aria-label=' Next page ']"))
         print("Going to next page")
         time.sleep(2)
     except IndexError:
@@ -39,9 +39,12 @@ while True:
             df.scraped_at[df.SA22021_V1_00_NAME_ASCII == location] = pd.Timestamp.now()
             df.to_csv("locations.csv", index=False)
             location = next(locations)
-            search = f"{location_type} in {location}"
+            search = f"{location_type} in {location}, Auckland"
             print(search)
             driver.get(f"https://www.google.com/maps/search/{search}")
+        else:
+            print("Got an IndexError, but there's more pages...")
+            next_page.click()
     except KeyboardInterrupt:
         print("Interrupted by user, will now save")
         break
