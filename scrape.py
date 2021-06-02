@@ -86,6 +86,11 @@ def extract_page():
             address = driver.find_element_by_css_selector("button[data-tooltip='Copy address']").get_attribute("aria-label").split(":")[-1].strip()
         except NoSuchElementException:
             pass
+        category = None
+        try:
+            category = driver.find_element_by_css_selector("button[jsaction='pane.rating.category']").text
+        except NoSuchElementException:
+            pass
         live_info = None
         try:
             popular = driver.find_element_by_css_selector("div.section-popular-times")
@@ -130,6 +135,7 @@ def extract_page():
             "properties": {
                 "name": name,
                 "address": address,
+                "category": category,
                 "link": link,
                 "code": code,
                 "live_info": live_info,
@@ -170,7 +176,10 @@ while True:
             f.write(driver.page_source)
         break
 
-driver.close()
+try:
+    driver.close()
+except:
+    print("Unable to close webdriver")
 
 if features:
     geojson = {
