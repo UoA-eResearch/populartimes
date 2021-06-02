@@ -11,6 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/leaflet-providers@1.3.0/leaflet-providers.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
         html,
         body,
@@ -81,7 +82,31 @@
                     Latlong: ${d.geometry.coordinates}<br>
                     Live info: ${JSON.stringify(p.live_info)}<br>
                     Scraped at: ${p.scraped_at}<br>
-                `)
+                    <div id="plot"></div>
+                `, {minWidth: 800, data: p.populartimes})
+                if (p.populartimes) {
+                    marker.on("popupopen", function(e) {
+                        var data = [
+                            {
+                                z: e.popup.options.data,
+                                y: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+                                type: 'heatmap',
+                            }
+                        ];
+                        var layout = {
+                            title: "Popular times heatmap",
+                            xaxis: {
+                                title: "Hour",
+                            },
+                            yaxis: {
+                                //title: "Day"
+                                autorange: "reversed"
+                            }
+                        }
+                        var container = $("#plot", e.popup._contentNode)[0];
+                        Plotly.newPlot(container, data, layout);
+                    })
+                }
             }
             updateStats()
         })
