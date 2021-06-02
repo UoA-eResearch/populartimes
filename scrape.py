@@ -24,7 +24,7 @@ chrome_options.add_argument("--headless")
 driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
 driver.maximize_window()
 driver.implicitly_wait(10)
-driver.get("https://www.google.com/maps/search/place+of+interest/@-36.9162656,174.7088314,12z")
+driver.get("https://www.google.com/maps/search/place+of+interest/@-36.9516993,174.5405294,10.5z/data=!4m2!2m1!6e1")
 
 def pprint_times(times):
     for i, day in enumerate(days):
@@ -40,6 +40,12 @@ if os.path.isfile(OUTFILE):
         for feature in data["features"]:
             features[feature["properties"]["link"]] = feature
         print(f"Loaded {len(features)} features")
+
+def click(elem):
+    try:
+        elem.click()
+    except ElementClickInterceptedException:
+        driver.execute_script("arguments[0].click();", elem)
 
 def extract_page():
     placesNeedsRefresh = True
@@ -62,7 +68,7 @@ def extract_page():
             print(f"Skipping {name}")
             continue
         print(f"Clicking on {name}")
-        place.click()
+        click(place)
         placesNeedsRefresh = True
         approx_ll = re.search(f'(?P<lat>-?\d+\.\d+).+?(?P<lng>-?\d+\.\d+)', link).groupdict()
         lat = float(approx_ll["lat"])
