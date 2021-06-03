@@ -19,7 +19,7 @@ def initialise_driver():
     chrome_options = Options()
     chrome_options.add_argument("--headless")
     driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
-    driver.implicitly_wait(10)
+    driver.implicitly_wait(5)
     return driver
 
 def pprint_times(times):
@@ -44,7 +44,7 @@ def extract_place(driver, features, name, link):
     except NoSuchElementException:
         print("No plus code, latlong might be inaccurate")
         code = None
-    driver.implicitly_wait(1)
+    driver.implicitly_wait(.1)
     address = None
     try:
         address = driver.find_element_by_css_selector("button[data-tooltip='Copy address']").get_attribute("aria-label").split(":")[-1].strip()
@@ -109,7 +109,7 @@ def extract_place(driver, features, name, link):
     }
     #print(feature)
     features[link] = feature
-    driver.implicitly_wait(10)
+    driver.implicitly_wait(5)
 
 def extract_page(driver, features):
     placesNeedsRefresh = True
@@ -124,7 +124,7 @@ def extract_page(driver, features):
                     scrollCount += 1
                     print("scrolling")
                     driver.execute_script("arguments[0].scrollTo(0, arguments[0].scrollHeight)", driver.find_element_by_css_selector("div[aria-label^='Results for']"))
-                    time.sleep(1)
+                    time.sleep(.5)
                     places = driver.find_elements_by_css_selector("div[aria-label^='Results for'] a[aria-label]")
                 if not places:
                     print("No places")
