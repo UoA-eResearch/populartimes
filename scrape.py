@@ -5,7 +5,7 @@ import pandas as pd
 
 OUTFILE = "data.geojson"
 df = pd.read_csv("locations.csv")
-df = df[(df.TA2021_V1_00_NAME == "Auckland") & (df.LAND_AREA_SQ_KM > 0)]
+df = df[(df.TA2021_V1_00_NAME == "Auckland") & (df.LAND_AREA_SQ_KM > 0) & (pd.isna(df.scraped_at))]
 print(f"Have {len(df)} locations")
 locations = iter(tqdm(df.SA22021_V1_00_NAME_ASCII))
 

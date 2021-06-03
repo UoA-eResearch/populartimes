@@ -44,6 +44,7 @@ def extract_place(driver, features, name, link):
     except NoSuchElementException:
         print("No plus code, latlong might be inaccurate")
         code = None
+    driver.implicitly_wait(1)
     address = None
     try:
         address = driver.find_element_by_css_selector("button[data-tooltip='Copy address']").get_attribute("aria-label").split(":")[-1].strip()
@@ -108,6 +109,7 @@ def extract_place(driver, features, name, link):
     }
     #print(feature)
     features[link] = feature
+    driver.implicitly_wait(10)
 
 def extract_page(driver, features):
     placesNeedsRefresh = True
