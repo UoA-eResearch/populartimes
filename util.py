@@ -29,7 +29,7 @@ def pprint_times(times):
 def click(driver, elem):
     try:
         elem.click()
-    except ElementClickInterceptedException:
+    except:
         driver.execute_script("arguments[0].click();", elem)
 
 def extract_place(driver, features, name, link):
@@ -126,7 +126,7 @@ def extract_page(driver, features):
                     places = driver.find_elements_by_css_selector("div[aria-label^='Results for'] a[aria-label]")
                 if not places:
                     print("No places")
-                    return
+                    raise IndexError
                 placesNeedsRefresh = False
             place = places[i]
             name = place.get_attribute('aria-label')
@@ -150,13 +150,17 @@ def extract_page(driver, features):
                         time.sleep(retry)
         except NoSuchElementException:
             # Single result
-            name = driver.find_element_by_css_selector("h1[class*='header-title-title']").text
-            print(f"Found {name}")
-            link = driver.current_url
-            if link in features:
-                print(f"Skipping {name}")
-            else:
-                extract_place(driver, features, name, link)
+            try:
+                name = driver.find_element_by_css_selector("h1[class*='header-title-title']").text
+                if name:
+                    print(f"Found {name}")
+                    link = driver.current_url
+                    if link in features:
+                        print(f"Skipping {name}")
+                    else:
+                        extract_place(driver, features, name, link)
+            except:
+                pass
             raise IndexError
 
 def load(features, OUTFILE):

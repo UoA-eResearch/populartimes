@@ -5,7 +5,7 @@ import pandas as pd
 
 OUTFILE = "data.geojson"
 df = pd.read_csv("locations.csv")
-df = df[df.TA2021_V1_00_NAME == "Auckland"]
+df = df[(df.TA2021_V1_00_NAME == "Auckland") & (df.LAND_AREA_SQ_KM > 0)]
 print(f"Have {len(df)} locations")
 locations = iter(tqdm(df.SA22021_V1_00_NAME_ASCII))
 
@@ -30,21 +30,18 @@ while True:
     except IndexError:
         try:
             next_page = driver.find_element_by_css_selector("button[aria-label=' Next page ']")
+            print(f'Next page button disabled: {next_page.get_attribute("disabled")}')
         except:
-            next_page = None
-        if not next_page or next_page.get_attribute("disabled"):
-            print("All done!")
-            save(features, OUTFILE)
-            # Record that we've scraped this location
-            df.scraped_at[df.SA22021_V1_00_NAME_ASCII == location] = pd.Timestamp.now()
-            df.to_csv("locations.csv", index=False)
-            location = next(locations)
-            search = f"{location_type} in {location}, Auckland"
-            print(search)
-            driver.get(f"https://www.google.com/maps/search/{search}")
-        else:
-            print("Got an IndexError, but there's more pages...")
-            next_page.click()
+            pass
+        print("All done!")
+        save(features, OUTFILE)
+        # Record that we've scraped this location
+        df.scraped_at[df.SA22021_V1_00_NAME_ASCII == location] = pd.Timestamp.now()
+        df.to_csv("locations.csv", index=False)
+        location = next(locations)
+        search = f"{location_type} in {location}, Auckland"
+        print(search)
+        driver.get(f"https://www.google.com/maps/search/{search}")
     except KeyboardInterrupt:
         print("Interrupted by user, will now save")
         break

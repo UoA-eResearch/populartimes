@@ -1,9 +1,7 @@
 SA22021_V1_00,SA22021_V1_00_NAME,SA22021_V1_00_NAME_ASCII,REGC2021_V1_00,REGC2021_V1_00_NAME,REGC2021_V1_00_NAME_ASCII,TA2021_V1_00,TA2021_V1_00_NAME,TA2021_V1_00_NAME_ASCII,LAND_AREA_SQ_KM,AREA_SQ_KM,Shape_Length,scraped_at
-110200,Okahukura Peninsula,Okahukura Peninsula,2,Auckland Region,Auckland Region,76,Auckland,Auckland,211.17145146,211.17145146,202849.722879,2021-06-03 10:41:44.971525
-110300,Inlet Kaipara Harbour South,Inlet Kaipara Harbour South,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.0,391.72779153,471866.998763,2021-06-03 10:43:48.473612
-110400,Cape Rodney,Cape Rodney,2,Auckland Region,Auckland Region,76,Auckland,Auckland,370.68110984,370.68110984,163226.491031,
-111900,Algies Bay-Scotts Landing,Algies Bay-Scotts Landing,2,Auckland Region,Auckland Region,76,Auckland,Auckland,15.37174828,15.37174828,45019.330137,
-112000,Inlets other Auckland,Inlets other Auckland,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.0,123.22238708,599920.247539,
+110200,Okahukura Peninsula,Okahukura Peninsula,2,Auckland Region,Auckland Region,76,Auckland,Auckland,211.17145146,211.17145146,202849.722879,2021-06-03 12:04:08.390364
+110400,Cape Rodney,Cape Rodney,2,Auckland Region,Auckland Region,76,Auckland,Auckland,370.68110984,370.68110984,163226.491031,2021-06-03 12:04:51.959181
+111900,Algies Bay-Scotts Landing,Algies Bay-Scotts Landing,2,Auckland Region,Auckland Region,76,Auckland,Auckland,15.37174828,15.37174828,45019.330137,2021-06-03 12:05:14.464762
 112100,Wainui-Waiwera,Wainui-Waiwera,2,Auckland Region,Auckland Region,76,Auckland,Auckland,78.71254182,78.71254182,67234.4989851,
 112200,Parakai,Parakai,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.45487644,1.45487644,7121.77986863,
 112300,Helensville Rural,Helensville Rural,2,Auckland Region,Auckland Region,76,Auckland,Auckland,57.09959995,57.09959995,78901.4655063,
@@ -36,7 +34,6 @@ SA22021_V1_00,SA22021_V1_00_NAME,SA22021_V1_00_NAME_ASCII,REGC2021_V1_00,REGC202
 118700,Browns Bay South East,Browns Bay South East,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.85598227,0.85598227,4406.83809979,
 118900,Greenhithe West,Greenhithe West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,2.72130029,2.72130029,10683.4095407,
 119200,Hobsonville,Hobsonville,2,Auckland Region,Auckland Region,76,Auckland,Auckland,2.17053222,2.17053222,10031.6520136,
-119300,Inlet Waitemata Harbour,Inlet Waitemata Harbour,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.0,79.05243763,298242.933388,
 120200,Hobsonville Point,Hobsonville Point,2,Auckland Region,Auckland Region,76,Auckland,Auckland,3.52155604,3.52155604,11979.9696761,
 123000,Rānui North,Ranui North,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.02921375,1.02921375,5259.77466347,
 123400,Forrest Hill West,Forrest Hill West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.23523144,1.23523144,5766.6528753,
@@ -70,7 +67,6 @@ SA22021_V1_00,SA22021_V1_00_NAME,SA22021_V1_00_NAME_ASCII,REGC2021_V1_00,REGC202
 140200,Epsom Central-North,Epsom Central-North,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.10588807,1.10588807,4365.09216981,
 140800,Epsom Central-South,Epsom Central-South,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.98346492,0.98346492,4405.4168494,
 141200,Three Kings East,Three Kings East,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.67406892,0.67406892,3721.42500774,
-141400,Inlet Manukau Harbour,Inlet Manukau Harbour,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.0,374.54642908,536523.747819,
 142100,Hillsborough West (Auckland),Hillsborough West (Auckland),2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.84158517,0.84158517,4108.62681297,
 142900,Hillsborough East (Auckland),Hillsborough East (Auckland),2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.63088888,0.63088888,4401.12266103,
 143400,Royal Oak East (Auckland),Royal Oak East (Auckland),2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.64096747,0.64096747,3919.82598349,
@@ -79,7 +75,6 @@ SA22021_V1_00,SA22021_V1_00_NAME,SA22021_V1_00_NAME_ASCII,REGC2021_V1_00,REGC202
 145000,Onehunga Central,Onehunga Central,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.86447113,0.86447113,3941.59302231,
 145700,Stonefields East,Stonefields East,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.4456663,0.4456663,3488.74047416,
 146100,Māngere Bridge Ambury,Mangere Bridge Ambury,2,Auckland Region,Auckland Region,76,Auckland,Auckland,3.14007075,3.14007075,13737.0259358,
-147300,Bays Waiheke Island,Bays Waiheke Island,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.0,35.90706564,109913.256158,
 147400,Sylvia Park,Sylvia Park,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.55710138,0.55710138,4547.92846342,
 147500,Māngere Mountain View,Mangere Mountain View,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.69737828,1.69737828,6675.67289626,
 147600,Surfdale,Surfdale,2,Auckland Region,Auckland Region,76,Auckland,Auckland,2.61294302,2.61294302,14417.4469563,
@@ -133,7 +128,6 @@ SA22021_V1_00,SA22021_V1_00_NAME,SA22021_V1_00_NAME_ASCII,REGC2021_V1_00,REGC202
 121900,Totara Vale South,Totara Vale South,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.89719552,0.89719552,5397.32801889,
 119900,Unsworth Heights West,Unsworth Heights West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.74922411,0.74922411,4937.7691503,
 110900,Dome Valley-Matakana,Dome Valley-Matakana,2,Auckland Region,Auckland Region,76,Auckland,Auckland,84.76079786,84.76079786,70048.8173179,
-111000,Oceanic Auckland Region West,Oceanic Auckland Region West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.0,2384.03456864,279398.279739,
 111100,Warkworth West,Warkworth West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,11.36229921,11.36229921,22623.2878473,
 111200,Puhoi Valley,Puhoi Valley,2,Auckland Region,Auckland Region,76,Auckland,Auckland,236.54224665,236.54224665,142255.62908,
 120600,Massey Central,Massey Central,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.88378441,0.88378441,5213.99146351,
@@ -149,7 +143,6 @@ SA22021_V1_00,SA22021_V1_00_NAME,SA22021_V1_00_NAME_ASCII,REGC2021_V1_00,REGC202
 111700,Snells Beach,Snells Beach,2,Auckland Region,Auckland Region,76,Auckland,Auckland,3.82784102,3.82784102,13976.6098793,
 111800,Barrier Islands,Barrier Islands,2,Auckland Region,Auckland Region,76,Auckland,Auckland,320.26886347,320.26886347,371155.45122,
 110500,Wellsford,Wellsford,2,Auckland Region,Auckland Region,76,Auckland,Auckland,4.55290152,4.55290152,11565.1050966,
-110600,Oceanic Auckland Region East,Oceanic Auckland Region East,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.0,7823.24100897,1171688.84639,
 110700,South Head,South Head,2,Auckland Region,Auckland Region,76,Auckland,Auckland,339.71291725,339.71291725,208091.488518,
 110800,Kaipara Hills,Kaipara Hills,2,Auckland Region,Auckland Region,76,Auckland,Auckland,282.56878466,282.56878466,126644.252408,
 112500,Waitoki,Waitoki,2,Auckland Region,Auckland Region,76,Auckland,Auckland,40.75310723,40.75310723,32607.2158209,
