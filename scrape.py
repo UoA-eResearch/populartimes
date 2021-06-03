@@ -5,9 +5,9 @@ import pandas as pd
 
 OUTFILE = "data.geojson"
 df = pd.read_csv("locations.csv")
-df = df[(df.TA2021_V1_00_NAME == "Auckland") & (df.LAND_AREA_SQ_KM > 0) & (pd.isna(df.scraped_at))]
+df = df[(df.TA2021_V1_00_NAME == "Auckland") & (df.LAND_AREA_SQ_KM > 0)]
 print(f"Have {len(df)} locations")
-locations = iter(tqdm(df.SA22021_V1_00_NAME_ASCII))
+locations = iter(tqdm(df.SA22021_V1_00_NAME_ASCII[pd.isna(df.scraped_at)]))
 
 driver = initialise_driver()
 location = next(locations)
@@ -51,7 +51,8 @@ while True:
         traceback.print_exc()
         with open("error.html", "w") as f:
             f.write(driver.page_source)
-        break
+        # Restart
+        driver.get(f"https://www.google.com/maps/search/{search}")
 
 save(features, OUTFILE)
 

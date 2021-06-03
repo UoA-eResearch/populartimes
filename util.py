@@ -111,6 +111,20 @@ def extract_place(driver, features, name, link):
     features[link] = feature
     driver.implicitly_wait(5)
 
+def refreshPlaces(driver):
+    places = []
+    scrollCount = 0
+    while len(places) < 20 and scrollCount < 10:
+        scrollCount += 1
+        print("scrolling")
+        driver.execute_script("arguments[0].scrollTo(0, arguments[0].scrollHeight)", driver.find_element_by_css_selector("div[aria-label^='Results for']"))
+        time.sleep(.5)
+        places = driver.find_elements_by_css_selector("div[aria-label^='Results for'] a[aria-label]")
+    if not places:
+        print("No places")
+        raise IndexError
+    return places
+
 def extract_page(driver, features):
     placesNeedsRefresh = True
     for i in tqdm(range(20)):
@@ -118,18 +132,7 @@ def extract_page(driver, features):
             # multiple results
             # Only refresh places if necessary. This is more efficient when skipping over already extracted places
             if placesNeedsRefresh:
-                places = []
-                scrollCount = 0
-                while len(places) < 20 and scrollCount < 10:
-                    scrollCount += 1
-                    print("scrolling")
-                    driver.execute_script("arguments[0].scrollTo(0, arguments[0].scrollHeight)", driver.find_element_by_css_selector("div[aria-label^='Results for']"))
-                    time.sleep(.5)
-                    places = driver.find_elements_by_css_selector("div[aria-label^='Results for'] a[aria-label]")
-                if not places:
-                    print("No places")
-                    raise IndexError
-                placesNeedsRefresh = False
+                places = refreshPlaces(driver)
             place = places[i]
             name = place.get_attribute('aria-label')
             link = place.get_attribute("href")
