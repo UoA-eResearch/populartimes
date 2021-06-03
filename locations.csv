@@ -39,37 +39,37 @@ SA22021_V1_00,SA22021_V1_00_NAME,SA22021_V1_00_NAME_ASCII,REGC2021_V1_00,REGC202
 123700,Castor Bay,Castor Bay,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.44386229,1.44386229,5353.19425838,2021-06-03 17:42:00.345469
 124600,Glenfield East,Glenfield East,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.6185098,0.6185098,3412.45974915,2021-06-03 17:49:46.698449
 124700,Henderson Valley,Henderson Valley,2,Auckland Region,Auckland Region,76,Auckland,Auckland,15.03789516,15.03789516,25782.0517291,2021-06-03 17:58:50.792714
-125000,Rānui South East,Ranui South East,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.94515523,0.94515523,6305.90072246,
-131600,Grey Lynn North,Grey Lynn North,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.7250584,0.7250584,4170.5590357,
-133400,Hobson Ridge Central,Hobson Ridge Central,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.0633195,0.0633195,1021.31153122,
-126400,Te Atatū South-Edmonton,Te Atatu South-Edmonton,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.06451885,1.06451885,5539.76519959,
-127200,Akoranga,Akoranga,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.16291792,1.16291792,5677.96813468,
-127600,Waiatarua,Waiatarua,2,Auckland Region,Auckland Region,76,Auckland,Auckland,11.28921716,11.28921716,24985.8221505,
-128000,Waitakere Ranges South,Waitakere Ranges South,2,Auckland Region,Auckland Region,76,Auckland,Auckland,101.55291731,101.55291731,62679.2093752,
-128700,Rosebank Peninsula,Rosebank Peninsula,2,Auckland Region,Auckland Region,76,Auckland,Auckland,2.36294568,2.36294568,18099.2114663,
-129000,Sunnyvale West-Parrs Park,Sunnyvale West-Parrs Park,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.8416823,0.8416823,4172.09744923,
-129300,Belmont (Auckland),Belmont (Auckland),2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.15438772,1.15438772,5525.98435636,
-130000,Oratia,Oratia,2,Auckland Region,Auckland Region,76,Auckland,Auckland,17.19048676,17.19048676,26984.9826305,
-130800,Glen Eden North,Glen Eden North,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.73608748,0.73608748,4112.00690111,
-130900,Glen Eden Woodglen,Glen Eden Woodglen,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.30137349,1.30137349,5801.11937216,
-131000,Kelston South,Kelston South,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.83556367,0.83556367,4663.02793651,
-134100,Queen Street South West,Queen Street South West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.22878283,0.22878283,2155.95862344,
-134300,Karangahape,Karangahape,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.28566049,0.28566049,2602.34228082,
-135300,Symonds Street West,Symonds Street West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.14529163,0.14529163,1993.17471484,
-136300,Sandringham North,Sandringham North,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.85700837,0.85700837,4392.81235597,
-136700,Titirangi South,Titirangi South,2,Auckland Region,Auckland Region,76,Auckland,Auckland,4.73741993,4.73741993,17042.1034136,
-136800,Ōwairaka East,Owairaka East,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.4025211,0.4025211,3102.80905181,
-137500,Laingholm,Laingholm,2,Auckland Region,Auckland Region,76,Auckland,Auckland,4.07829951,4.07829951,11082.6578818,
-139700,Mount Roskill North,Mount Roskill North,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.95815631,0.95815631,3953.94284478,
-140200,Epsom Central-North,Epsom Central-North,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.10588807,1.10588807,4365.09216981,
-140800,Epsom Central-South,Epsom Central-South,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.98346492,0.98346492,4405.4168494,
-141200,Three Kings East,Three Kings East,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.67406892,0.67406892,3721.42500774,
-142100,Hillsborough West (Auckland),Hillsborough West (Auckland),2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.84158517,0.84158517,4108.62681297,
-142900,Hillsborough East (Auckland),Hillsborough East (Auckland),2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.63088888,0.63088888,4401.12266103,
-143400,Royal Oak East (Auckland),Royal Oak East (Auckland),2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.64096747,0.64096747,3919.82598349,
-143800,Greenlane South,Greenlane South,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.85264516,0.85264516,5195.18306733,
-144600,Oneroa West,Oneroa West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,8.42023739,8.42023739,25913.7395114,
-145000,Onehunga Central,Onehunga Central,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.86447113,0.86447113,3941.59302231,
+125000,Rānui South East,Ranui South East,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.94515523,0.94515523,6305.90072246,2021-06-03 17:59:53.117571
+131600,Grey Lynn North,Grey Lynn North,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.7250584,0.7250584,4170.5590357,2021-06-03 18:12:18.576680
+133400,Hobson Ridge Central,Hobson Ridge Central,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.0633195,0.0633195,1021.31153122,2021-06-03 18:12:51.247539
+126400,Te Atatū South-Edmonton,Te Atatu South-Edmonton,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.06451885,1.06451885,5539.76519959,2021-06-03 18:14:55.928548
+127200,Akoranga,Akoranga,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.16291792,1.16291792,5677.96813468,2021-06-03 18:19:42.889710
+127600,Waiatarua,Waiatarua,2,Auckland Region,Auckland Region,76,Auckland,Auckland,11.28921716,11.28921716,24985.8221505,2021-06-03 18:24:16.834209
+128000,Waitakere Ranges South,Waitakere Ranges South,2,Auckland Region,Auckland Region,76,Auckland,Auckland,101.55291731,101.55291731,62679.2093752,2021-06-03 18:32:40.151802
+128700,Rosebank Peninsula,Rosebank Peninsula,2,Auckland Region,Auckland Region,76,Auckland,Auckland,2.36294568,2.36294568,18099.2114663,2021-06-03 18:46:56.357636
+129000,Sunnyvale West-Parrs Park,Sunnyvale West-Parrs Park,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.8416823,0.8416823,4172.09744923,2021-06-03 18:47:10.128389
+129300,Belmont (Auckland),Belmont (Auckland),2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.15438772,1.15438772,5525.98435636,2021-06-03 19:00:31.948780
+130000,Oratia,Oratia,2,Auckland Region,Auckland Region,76,Auckland,Auckland,17.19048676,17.19048676,26984.9826305,2021-06-03 19:08:58.628436
+130800,Glen Eden North,Glen Eden North,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.73608748,0.73608748,4112.00690111,2021-06-03 19:22:33.835393
+130900,Glen Eden Woodglen,Glen Eden Woodglen,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.30137349,1.30137349,5801.11937216,2021-06-03 19:25:08.226299
+131000,Kelston South,Kelston South,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.83556367,0.83556367,4663.02793651,2021-06-03 19:29:52.337113
+134100,Queen Street South West,Queen Street South West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.22878283,0.22878283,2155.95862344,2021-06-03 19:34:38.467093
+134300,Karangahape,Karangahape,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.28566049,0.28566049,2602.34228082,2021-06-03 19:43:44.584372
+135300,Symonds Street West,Symonds Street West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.14529163,0.14529163,1993.17471484,2021-06-03 19:51:26.660650
+136300,Sandringham North,Sandringham North,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.85700837,0.85700837,4392.81235597,2021-06-03 20:01:38.190118
+136700,Titirangi South,Titirangi South,2,Auckland Region,Auckland Region,76,Auckland,Auckland,4.73741993,4.73741993,17042.1034136,2021-06-03 20:08:23.738377
+136800,Ōwairaka East,Owairaka East,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.4025211,0.4025211,3102.80905181,2021-06-03 20:10:36.713327
+137500,Laingholm,Laingholm,2,Auckland Region,Auckland Region,76,Auckland,Auckland,4.07829951,4.07829951,11082.6578818,2021-06-03 20:15:47.639252
+139700,Mount Roskill North,Mount Roskill North,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.95815631,0.95815631,3953.94284478,2021-06-03 20:27:55.642160
+140200,Epsom Central-North,Epsom Central-North,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.10588807,1.10588807,4365.09216981,2021-06-03 20:28:41.238361
+140800,Epsom Central-South,Epsom Central-South,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.98346492,0.98346492,4405.4168494,2021-06-03 20:31:57.069607
+141200,Three Kings East,Three Kings East,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.67406892,0.67406892,3721.42500774,2021-06-03 20:38:10.445546
+142100,Hillsborough West (Auckland),Hillsborough West (Auckland),2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.84158517,0.84158517,4108.62681297,2021-06-03 20:46:38.474601
+142900,Hillsborough East (Auckland),Hillsborough East (Auckland),2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.63088888,0.63088888,4401.12266103,2021-06-03 20:50:21.061004
+143400,Royal Oak East (Auckland),Royal Oak East (Auckland),2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.64096747,0.64096747,3919.82598349,2021-06-03 21:02:18.262059
+143800,Greenlane South,Greenlane South,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.85264516,0.85264516,5195.18306733,2021-06-03 21:10:02.006749
+144600,Oneroa West,Oneroa West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,8.42023739,8.42023739,25913.7395114,2021-06-03 21:14:07.527235
+145000,Onehunga Central,Onehunga Central,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.86447113,0.86447113,3941.59302231,2021-06-03 21:20:26.272804
 145700,Stonefields East,Stonefields East,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.4456663,0.4456663,3488.74047416,
 146100,Māngere Bridge Ambury,Mangere Bridge Ambury,2,Auckland Region,Auckland Region,76,Auckland,Auckland,3.14007075,3.14007075,13737.0259358,
 147400,Sylvia Park,Sylvia Park,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.55710138,0.55710138,4547.92846342,
