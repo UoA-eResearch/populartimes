@@ -105,38 +105,38 @@ SA22021_V1_00,SA22021_V1_00_NAME,SA22021_V1_00_NAME_ASCII,REGC2021_V1_00,REGC202
 117800,Oteha West,Oteha West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.53026573,0.53026573,3505.30543031,2021-06-04 12:10:18.890608
 131800,Freemans Bay,Freemans Bay,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.03533635,1.03533635,4939.44186837,2021-06-04 12:20:28.158283
 117400,Albany West,Albany West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,2.05688601,2.05688601,10002.1205754,2021-06-04 12:28:21.989162
-118000,Waitakere,Waitakere,2,Auckland Region,Auckland Region,76,Auckland,Auckland,15.28945995,15.28945995,23634.5851696,
-119600,Westgate South,Westgate South,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.70943526,1.70943526,6899.51261258,
-119700,Windsor Park,Windsor Park,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.83585293,0.83585293,4403.73572463,
-118100,Albany South,Albany South,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.4855869,1.4855869,7473.03387141,
-118200,Browns Bay South West,Browns Bay South West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.15126945,1.15126945,5077.51194114,
-118300,Browns Bay Central,Browns Bay Central,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.18290053,1.18290053,5815.73100784,
-118400,Schnapper Rock,Schnapper Rock,2,Auckland Region,Auckland Region,76,Auckland,Auckland,2.21502845,2.21502845,8266.87099696,
-118500,Pinehill,Pinehill,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.62867842,1.62867842,5349.4745592,
-118600,North Harbour,North Harbour,2,Auckland Region,Auckland Region,76,Auckland,Auckland,5.48659458,5.48659458,13710.7978764,
-118800,Westgate Central,Westgate Central,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.86366222,1.86366222,6191.68104962,
-119000,Rothesay Bay,Rothesay Bay,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.86492687,0.86492687,5275.12476854,
-119100,Greenhithe East,Greenhithe East,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.4381762,1.4381762,7895.98410045,
-119800,West Harbour West,West Harbour West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.92726584,1.92726584,6740.49554132,
-132600,New Lynn North West,New Lynn North West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.68956638,0.68956638,3482.44988296,
-119400,Greenhithe South,Greenhithe South,2,Auckland Region,Auckland Region,76,Auckland,Auckland,3.64449888,3.64449888,13105.3791028,
-119500,Murrays Bay West,Murrays Bay West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.95731874,0.95731874,4553.36541182,
-132700,Hobson Ridge North,Hobson Ridge North,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.1492268,0.1492268,2058.54725125,
-120000,Murrays Bay East,Murrays Bay East,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.69795032,0.69795032,4374.48414695,
-120100,Birdwood West,Birdwood West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,5.9362787,5.9362787,13929.3046731,
-145200,Oranga,Oranga,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.66853336,0.66853336,3769.27607972,
-120300,West Harbour Clearwater Cove,West Harbour Clearwater Cove,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.35724979,1.67722533,8784.28524585,
-120400,Unsworth Heights East,Unsworth Heights East,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.10831885,1.10831885,4975.53863624,
-120500,Mairangi Bay North,Mairangi Bay North,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.92452501,0.92452501,4958.49649878,
-120700,West Harbour Luckens Point,West Harbour Luckens Point,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.9837843,0.9837843,5476.5804878,
-120800,Mairangi Bay South,Mairangi Bay South,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.80148607,0.80148607,4814.65512981,
-120900,Massey Royal Road West,Massey Royal Road West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.89641574,0.89641574,4351.70455466,
-138400,Mount Eden West,Mount Eden West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.79137389,0.79137389,4823.63186199,
-121400,Bayview West,Bayview West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.73396895,0.73396895,3779.41110613,
-121600,Royal Heights North,Royal Heights North,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.49490896,1.49490896,6735.07418271,
-139300,Maungawhau,Maungawhau,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.73452195,0.73452195,3939.12827222,
-121700,Massey West,Massey West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.18546354,1.18546354,7602.11714476,
-121800,Beach Haven West,Beach Haven West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.20746814,1.20746814,6341.16608655,
+118000,Waitakere,Waitakere,2,Auckland Region,Auckland Region,76,Auckland,Auckland,15.28945995,15.28945995,23634.5851696,2021-06-04 12:56:57.756958
+119600,Westgate South,Westgate South,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.70943526,1.70943526,6899.51261258,2021-06-04 12:58:20.549101
+119700,Windsor Park,Windsor Park,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.83585293,0.83585293,4403.73572463,2021-06-04 13:04:42.968362
+118100,Albany South,Albany South,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.4855869,1.4855869,7473.03387141,2021-06-04 13:11:23.998650
+118200,Browns Bay South West,Browns Bay South West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.15126945,1.15126945,5077.51194114,2021-06-04 13:13:59.749868
+118300,Browns Bay Central,Browns Bay Central,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.18290053,1.18290053,5815.73100784,2021-06-04 13:16:17.590120
+118400,Schnapper Rock,Schnapper Rock,2,Auckland Region,Auckland Region,76,Auckland,Auckland,2.21502845,2.21502845,8266.87099696,2021-06-04 13:23:16.534167
+118500,Pinehill,Pinehill,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.62867842,1.62867842,5349.4745592,2021-06-04 13:30:54.375417
+118600,North Harbour,North Harbour,2,Auckland Region,Auckland Region,76,Auckland,Auckland,5.48659458,5.48659458,13710.7978764,2021-06-04 13:41:09.196466
+118800,Westgate Central,Westgate Central,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.86366222,1.86366222,6191.68104962,2021-06-04 13:50:54.794314
+119000,Rothesay Bay,Rothesay Bay,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.86492687,0.86492687,5275.12476854,2021-06-04 13:58:15.059261
+119100,Greenhithe East,Greenhithe East,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.4381762,1.4381762,7895.98410045,2021-06-04 14:02:25.888169
+119800,West Harbour West,West Harbour West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.92726584,1.92726584,6740.49554132,2021-06-04 14:10:11.875922
+132600,New Lynn North West,New Lynn North West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.68956638,0.68956638,3482.44988296,2021-06-04 14:12:17.230159
+119400,Greenhithe South,Greenhithe South,2,Auckland Region,Auckland Region,76,Auckland,Auckland,3.64449888,3.64449888,13105.3791028,2021-06-04 14:16:45.812160
+119500,Murrays Bay West,Murrays Bay West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.95731874,0.95731874,4553.36541182,2021-06-04 14:21:42.228052
+132700,Hobson Ridge North,Hobson Ridge North,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.1492268,0.1492268,2058.54725125,2021-06-04 14:23:05.550483
+120000,Murrays Bay East,Murrays Bay East,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.69795032,0.69795032,4374.48414695,2021-06-04 14:28:27.694216
+120100,Birdwood West,Birdwood West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,5.9362787,5.9362787,13929.3046731,2021-06-04 14:29:11.389383
+145200,Oranga,Oranga,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.66853336,0.66853336,3769.27607972,2021-06-04 14:35:15.791874
+120300,West Harbour Clearwater Cove,West Harbour Clearwater Cove,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.35724979,1.67722533,8784.28524585,2021-06-04 14:40:56.284701
+120400,Unsworth Heights East,Unsworth Heights East,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.10831885,1.10831885,4975.53863624,2021-06-04 14:48:33.887605
+120500,Mairangi Bay North,Mairangi Bay North,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.92452501,0.92452501,4958.49649878,2021-06-04 14:55:08.150780
+120700,West Harbour Luckens Point,West Harbour Luckens Point,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.9837843,0.9837843,5476.5804878,2021-06-04 14:59:55.462661
+120800,Mairangi Bay South,Mairangi Bay South,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.80148607,0.80148607,4814.65512981,2021-06-04 15:01:57.680970
+120900,Massey Royal Road West,Massey Royal Road West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.89641574,0.89641574,4351.70455466,2021-06-04 15:08:41.540749
+138400,Mount Eden West,Mount Eden West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.79137389,0.79137389,4823.63186199,2021-06-04 15:19:20.801008
+121400,Bayview West,Bayview West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.73396895,0.73396895,3779.41110613,2021-06-04 15:22:04.578217
+121600,Royal Heights North,Royal Heights North,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.49490896,1.49490896,6735.07418271,2021-06-04 15:24:13.955676
+139300,Maungawhau,Maungawhau,2,Auckland Region,Auckland Region,76,Auckland,Auckland,0.73452195,0.73452195,3939.12827222,2021-06-04 15:27:57.812237
+121700,Massey West,Massey West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.18546354,1.18546354,7602.11714476,2021-06-04 15:32:42.681310
+121800,Beach Haven West,Beach Haven West,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.20746814,1.20746814,6341.16608655,2021-06-04 15:34:42.578270
 122000,Swanson,Swanson,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.89457674,1.89457674,10271.9164447,
 158100,Ormiston South,Ormiston South,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.70395036,1.70395036,5866.05442035,
 125700,Henderson Lincoln South,Henderson Lincoln South,2,Auckland Region,Auckland Region,76,Auckland,Auckland,1.35507618,1.35507618,6855.51654342,
