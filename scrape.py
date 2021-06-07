@@ -5,14 +5,18 @@ import pandas as pd
 
 OUTFILE = "data.geojson"
 df = pd.read_csv("locations.csv")
-df = df[(df.TA2021_V1_00_NAME == "Auckland") & (df.LAND_AREA_SQ_KM > 0)]
-print(f"Have {len(df)} locations")
-locations = iter(tqdm(df.SA22021_V1_00_NAME_ASCII[pd.isna(df.scraped_at)]))
+df["name"] = df[["SA22021_V1_00_NAME_ASCII", "TA2021_V1_00_NAME_ASCII", "REGC2021_V1_00_NAME_ASCII"]].agg(', '.join, axis=1)
+locations = df.name[
+    (df.LAND_AREA_SQ_KM > 0) & 
+    pd.isna(df.scraped_at)
+]
+print(f"Have {len(locations)} locations")
+locations = iter(tqdm(locations))
 
 driver = initialise_driver()
 location = next(locations)
 location_type = 'place of interest'
-search = f"{location_type} in {location}, Auckland"
+search = f"{location_type} in {location}"
 print(search)
 driver.get(f"https://www.google.com/maps/search/{search}")
 
@@ -36,10 +40,10 @@ while True:
         print("All done!")
         save(features, OUTFILE)
         # Record that we've scraped this location
-        df.scraped_at[df.SA22021_V1_00_NAME_ASCII == location] = pd.Timestamp.now()
+        df.scraped_at[df.name == location] = pd.Timestamp.now()
         df.to_csv("locations.csv", index=False)
         location = next(locations)
-        search = f"{location_type} in {location}, Auckland"
+        search = f"{location_type} in {location}"
         print(search)
         driver.get(f"https://www.google.com/maps/search/{search}")
     except KeyboardInterrupt:
