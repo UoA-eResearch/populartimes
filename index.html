@@ -4,8 +4,7 @@
     <title>Popular times</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css"
         integrity="sha256-iYUgmrapfDGvBrePJPrMWQZDcObdAcStKBpjP3Az+3s=" crossorigin="anonymous" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js"
-        integrity="sha256-CNm+7c26DTTCGRQkM9vp7aP85kHFMqs9MhPEuytF+fQ=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet.glify@3.1.0/dist/glify-browser.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
     <script src="https://unpkg.com/leaflet-spin@1.1.0/leaflet.spin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
@@ -47,7 +46,7 @@
             zoom: 12
         })
 
-        var placesWithPopularTimes = L.layerGroup().addTo(map);
+        var placesWithPopularTimes = L.layerGroup();
         var placesWithoutPopularTimes = L.layerGroup();
 
         var baseMaps = {
@@ -55,15 +54,153 @@
             "CartoDB Dark Matter": L.tileLayer.provider("CartoDB.DarkMatter"),
         }
         var overlayMaps = {
-            "Places with popular times": placesWithPopularTimes,
-            "Places without popular times": placesWithoutPopularTimes,
+            "Places with popular times": L.layerGroup().addTo(map),
+            "Places without popular times": L.layerGroup(),
         }
         L.control.layers(baseMaps, overlayMaps, { position: "topright" }).addTo(map);
+
+        var layers = ["Places with popular times"]
+        function updateLayers() {
+            if (layers.length == 0) {
+                window.pointsLayer.remove();
+            } else if (layers.length == 2) {
+                createPointsLayer(window.data);
+            } else if (layers[0] == "Places with popular times") {
+                var data = {
+                    type: "FeatureCollection",
+                    features: window.data.features.filter(f => f.properties.populartimes)
+                }
+                createPointsLayer(data)
+            } else if (layers[0] == "Places without popular times") {
+                var data = {
+                    type: "FeatureCollection",
+                    features: window.data.features.filter(f => !f.properties.populartimes)
+                }
+                createPointsLayer(data)
+            }
+        }
+        
+        map.on("overlayadd", function (e) {
+            if (!window.data) return;
+            layers.push(e.name);
+            updateLayers()
+        }).on("overlayremove", function (e) {
+            if (!window.data) return;
+            layers.splice(layers.indexOf(e.name), 1);
+            updateLayers()
+        });
+
+        function createPointsLayer(data) {
+            if (window.pointsLayer) window.pointsLayer.remove()
+            var points = data.features.map(f => [f.geometry.coordinates[1], f.geometry.coordinates[0]])
+            window.pointsLayer = L.glify.points({
+                map: map,
+                data: points,
+                size: 10,
+                color: function (i, e) {
+                    if (data.features[i].properties.populartimes) {
+                        return {"r": 0, "g": 0, "b": 1}
+                    } else {
+                        return {"r": 1, "g": 0, "b": 0}
+                    }
+                },
+                hover: function(e, point) {
+                    var i = points.indexOf(point);
+                    var feature = data.features[i];
+                    if (window.tooltip) map.closeTooltip(window.tooltip)
+                    window.tooltip = L.tooltip()
+                        .setContent(feature.properties.name)
+                        .setLatLng(point)
+                        .addTo(map);
+                },
+                sensitivity: 10,
+                sensitivityHover: 10,
+                click: function (e, point) {
+                    var i = points.indexOf(point);
+                    var feature = data.features[i];
+                    var p = feature.properties;
+                    point = [feature.geometry.coordinates[1], feature.geometry.coordinates[0]];
+                    var popup = L.popup({minWidth: 800})
+                        .setLatLng(point)
+                        .setContent(`<b><a href="${p.link}">${p.name}</a></b><br>
+                            Category: ${p.category}<br>
+                            Address: ${p.address}<br>
+                            Plus code: ${p.code}<br>
+                            Latlong: ${point}<br>
+                            Live info: ${JSON.stringify(p.live_info)}<br>
+                            Scraped at: ${p.scraped_at}<br>
+                            <div id="heatmap"></div>
+                            <div id="line"></div>
+                        `)
+                        .on("add", function(e) {
+                            if (p.populartimes) {
+                                var px = map.project(point);
+                                console.log(px)
+                                px.y -= 400;
+                                map.panTo(map.unproject(px),{animate: true});
+
+                                var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+                                var plotData = [
+                                    {
+                                        z: p.populartimes,
+                                        y: days,
+                                        type: 'heatmap',
+                                    }
+                                ];
+                                var layout = {
+                                    title: "Popular times heatmap",
+                                    xaxis: {
+                                        title: "Hour",
+                                    },
+                                    yaxis: {
+                                        //title: "Day"
+                                        autorange: "reversed"
+                                    },
+                                    height: 400,
+                                }
+                                var container = $("#heatmap", e.target._contentNode)[0];
+                                Plotly.newPlot(container, plotData, layout);
+
+                                plotData = []
+                                for (i in p.populartimes) {
+                                    day = p.populartimes[i]
+                                    plotData.push({
+                                        name: days[i],
+                                        y: day,
+                                        type: 'scatter'
+                                    })
+                                }
+                                var layout = {
+                                    title: "Popular times line plot",
+                                    xaxis: {
+                                        title: "Hour",
+                                    },
+                                    yaxis: {
+                                        title: "Popularity",
+                                    },
+                                    height: 400,
+                                }
+                                var container = $("#line", e.target._contentNode)[0];
+                                Plotly.newPlot(container, plotData, layout);
+                            }
+                        })
+                        .openOn(map)
+                },
+                opacity: 1,
+                //fragmentShaderSource: L.glify.shader.fragment.simpleCircle
+            })
+        }
 
         map.spin(true);
         $.getJSON("data.geojson", function (data) {
             console.log(data)
+            window.data = data
             map.spin(false);
+            var dataWithPopularTimes = {
+                type: "FeatureCollection",
+                features: data.features.filter(f => f.properties.populartimes)
+            }
+            createPointsLayer(dataWithPopularTimes)
             for (var d of data.features) {
                 var p = d.properties
                 if (p.populartimes) {
@@ -76,68 +213,6 @@
                 var lng = d.geometry.coordinates[0]
                 var lat = d.geometry.coordinates[1]
                 var marker = new L.circleMarker([lat, lng], { radius: 10, color: color }).addTo(layer).bindTooltip(p.name);
-                marker.bindPopup(`<b><a href="${p.link}">${p.name}</a></b><br>
-                    Category: ${p.category}<br>
-                    Address: ${p.address}<br>
-                    Plus code: ${p.code}<br>
-                    Latlong: ${lat},${lng}<br>
-                    Live info: ${JSON.stringify(p.live_info)}<br>
-                    Scraped at: ${p.scraped_at}<br>
-                    <div id="heatmap"></div>
-                    <div id="line"></div>
-                `, {minWidth: 800, data: p.populartimes})
-                if (p.populartimes) {
-                    marker.on("popupopen", function(e) {
-                        var px = map.project(e.target._popup._latlng);
-                        console.log(px)
-                        px.y -= 400;
-                        map.panTo(map.unproject(px),{animate: true});
-
-                        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-                        var data = [
-                            {
-                                z: e.popup.options.data,
-                                y: days,
-                                type: 'heatmap',
-                            }
-                        ];
-                        var layout = {
-                            title: "Popular times heatmap",
-                            xaxis: {
-                                title: "Hour",
-                            },
-                            yaxis: {
-                                //title: "Day"
-                                autorange: "reversed"
-                            },
-                            height: 400,
-                        }
-                        var container = $("#heatmap", e.popup._contentNode)[0];
-                        Plotly.newPlot(container, data, layout);
-
-                        data = []
-                        for (i in e.popup.options.data) {
-                            day = e.popup.options.data[i]
-                            data.push({
-                                name: days[i],
-                                y: day,
-                                type: 'scatter'
-                            })
-                        }
-                        var layout = {
-                            title: "Popular times line plot",
-                            xaxis: {
-                                title: "Hour",
-                            },
-                            yaxis: {
-                                title: "Popularity",
-                            },
-                            height: 400,
-                        }
-                        var container = $("#line", e.popup._contentNode)[0];
-                        Plotly.newPlot(container, data, layout);
-                    })
-                }
             }
             updateStats()
         })
