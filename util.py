@@ -33,9 +33,13 @@ def click(driver, elem):
         driver.execute_script("arguments[0].click();", elem)
 
 def extract_place(driver, features, name, link):
-    approx_ll = re.search(f'(?P<lat>-?\d+\.\d+).+?(?P<lng>-?\d+\.\d+)', link).groupdict()
-    lat = float(approx_ll["lat"])
-    lng = float(approx_ll["lng"])
+    try:
+        approx_ll = re.search(f'(?P<lat>-?\d+\.\d+).+?(?P<lng>-?\d+\.\d+)', link).groupdict()
+        lat = float(approx_ll["lat"])
+        lng = float(approx_ll["lng"])
+    except NoneType:
+        print(f"No approx latlong in URL {link} for {name}")
+        return
     try:
         code = driver.find_element_by_css_selector("button[data-tooltip='Copy plus code']").text
         codeArea = olc.decode(olc.recoverNearest(code.split()[0], lat, lng))
