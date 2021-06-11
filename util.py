@@ -37,7 +37,7 @@ def extract_place(driver, features, name, link):
         approx_ll = re.search(f'(?P<lat>-?\d+\.\d+).+?(?P<lng>-?\d+\.\d+)', link).groupdict()
         lat = float(approx_ll["lat"])
         lng = float(approx_ll["lng"])
-    except NoneType:
+    except AttributeError:
         print(f"No approx latlong in URL {link} for {name}")
         return
     try:
