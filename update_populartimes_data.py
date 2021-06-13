@@ -14,11 +14,11 @@ features = [f for f in data["features"] if f["properties"]["populartimes"] and f
 for feature in tqdm(features):
     p = feature["properties"]
     print(p)
-    print(pprint_times(p["populartimes"]))
+    pprint_times(p["populartimes"])
     popularity = get_populartimes_from_search(p["name"], p["address"])[2]
     popularity, wait_times = get_popularity_for_day(popularity)
     popularity = [day["data"] for day in popularity]
     # shift last element to first
     popularity = popularity[-1:] + popularity[:-1] 
-    print(pprint_times(popularity))
+    pprint_times(popularity)
     break
