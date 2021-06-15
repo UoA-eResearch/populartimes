@@ -2,25 +2,32 @@
 
 from crawler import *
 from util import *
-from pprint import pprint
+from datetime import datetime, timedelta
+import dateutil.parser
 
 with open("data.geojson") as f:
     data = json.load(f)
 
-for i, feature in enumerate(tqdm(data["features"])):
-    if feature["properties"]["populartimes"] and feature["properties"]["address"]:
+try:
+    for i, feature in enumerate(tqdm(data["features"])):
         p = feature["properties"]
-        #pprint_times(p["populartimes"])
-        popularity = get_populartimes_from_search(p["name"], p["address"])[2]
-        if popularity:
-            popularity, wait_times = get_popularity_for_day(popularity)
-            popularity = [day["data"] for day in popularity]
-            # shift last element to first
-            popularity = popularity[-1:] + popularity[:-1]
-            #pprint_times(popularity)
-            p["populartimes"] = popularity
-            p["scraped_at"] = datetime.now().isoformat(sep=" ", timespec="seconds")
-            data["features"][i]["properties"] = p
+        if p["populartimes"] and p["address"] and dateutil.parser.isoparse(p["scraped_at"]) < (datetime.now() - timedelta(days=7)):
+            #print(p)
+            #pprint_times(p["populartimes"])
+            popularity = get_populartimes_from_search(p["name"], p["address"])[2]
+            if popularity:
+                popularity, wait_times = get_popularity_for_day(popularity)
+                popularity = [day["data"] for day in popularity]
+                # shift last element to first
+                popularity = popularity[-1:] + popularity[:-1]
+                #pprint_times(popularity)
+                p["populartimes"] = popularity
+                p["scraped_at"] = datetime.now().isoformat(sep=" ", timespec="seconds")
+                data["features"][i]["properties"] = p
+except KeyboardInterrupt:
+    print("Interrupted by user, will now save")
+except Exception as e:
+    print(f"ERROR: {e}")
 
 with open("data.geojson", "w") as f:
     json.dump(data, f)
