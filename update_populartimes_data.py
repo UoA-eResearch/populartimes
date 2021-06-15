@@ -3,22 +3,25 @@
 from crawler import *
 from util import *
 from pprint import pprint
-import json
-from tqdm import tqdm
 
 with open("data.geojson") as f:
     data = json.load(f)
 
-features = [f for f in data["features"] if f["properties"]["populartimes"] and f["properties"]["address"]]
+for i, feature in enumerate(tqdm(data["features"])):
+    if feature["properties"]["populartimes"] and feature["properties"]["address"]:
+        p = feature["properties"]
+        #pprint_times(p["populartimes"])
+        popularity = get_populartimes_from_search(p["name"], p["address"])[2]
+        if popularity:
+            popularity, wait_times = get_popularity_for_day(popularity)
+            popularity = [day["data"] for day in popularity]
+            # shift last element to first
+            popularity = popularity[-1:] + popularity[:-1]
+            #pprint_times(popularity)
+            p["populartimes"] = popularity
+            p["scraped_at"] = datetime.now().isoformat(sep=" ", timespec="seconds")
+            data["features"][i]["properties"] = p
 
-for feature in tqdm(features):
-    p = feature["properties"]
-    print(p)
-    pprint_times(p["populartimes"])
-    popularity = get_populartimes_from_search(p["name"], p["address"])[2]
-    popularity, wait_times = get_popularity_for_day(popularity)
-    popularity = [day["data"] for day in popularity]
-    # shift last element to first
-    popularity = popularity[-1:] + popularity[:-1] 
-    pprint_times(popularity)
-    break
+with open("data.geojson", "w") as f:
+    json.dump(data, f)
+print(f"Wrote {len(data['features'])} places")
