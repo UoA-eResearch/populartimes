@@ -11,7 +11,7 @@ with open("data.geojson") as f:
 try:
     for i, feature in enumerate(tqdm(data["features"])):
         p = feature["properties"]
-        if p["populartimes"] and p["address"] and dateutil.parser.isoparse(p["scraped_at"]) < (datetime.now() - timedelta(days=7)):
+        if p["populartimes"] and p["address"] and dateutil.parser.isoparse(p["scraped_at"]) < (datetime.now() - timedelta(days=2)):
             #print(p)
             #pprint_times(p["populartimes"])
             popularity = get_populartimes_from_search(p["name"], p["address"])[2]
