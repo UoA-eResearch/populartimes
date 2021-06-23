@@ -4,6 +4,7 @@ from crawler import *
 from util import *
 from datetime import datetime, timedelta
 import dateutil.parser
+import time
 
 with open("data.geojson") as f:
     data = json.load(f)
@@ -14,7 +15,13 @@ try:
         if p["populartimes"] and p["address"] and dateutil.parser.isoparse(p["scraped_at"]) < (datetime.now() - timedelta(days=2)):
             #print(p)
             #pprint_times(p["populartimes"])
-            popularity = get_populartimes_from_search(p["name"], p["address"])[2]
+            while True:
+                try:
+                    popularity = get_populartimes_from_search(p["name"], p["address"])[2]
+                    break
+                except Exception as e:
+                    print(f"ERROR: {e}, retrying in 1s")
+                    time.sleep(1)
             if popularity:
                 popularity, wait_times = get_popularity_for_day(popularity)
                 popularity = [day["data"] for day in popularity]
