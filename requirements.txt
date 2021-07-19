@@ -1,4 +1,8 @@
 selenium
 webdriver-manager
 openlocationcode
-geopy
+
+# from https://github.com/m-wrzr/populartimes/blob/master/setup.py#L47
+requests>2,<3
+geopy>=2,<3
+urllib3>=1.21,<2
