@@ -61,12 +61,12 @@ def extract_place(driver, features, name, link):
         pass
     live_info = None
     try:
-        popular = driver.find_element_by_css_selector("div.section-popular-times")
+        popular = driver.find_element_by_css_selector("div[aria-label^='Popular times']")
         print("Has popular times")
         times = [[0]*24 for _ in range(7)] # 2D matrix, 7 days of the week, 24h per day
         dow = 0
         hour_prev = 0
-        for elem in driver.find_elements_by_css_selector("div.section-popular-times-bar"):
+        for elem in driver.find_elements_by_css_selector("div[aria-label*='busy at']"):
             bits = elem.get_attribute("aria-label").split()
             if bits[0] == "%":
                 # Closed on this day
