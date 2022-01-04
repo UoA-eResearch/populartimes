@@ -149,7 +149,7 @@ def extract_page(driver, features):
             extract_place(driver, features, name, link)
             for retry in range(5):
                 try:
-                    driver.find_element_by_xpath('//button/span[text()="Back to results"]').click()
+                    driver.find_element_by_css_selector('button[aria-label="Back"]').click()
                     break
                 except:
                     print(retry)
