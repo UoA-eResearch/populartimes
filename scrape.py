@@ -15,7 +15,7 @@ location = next(locations)
 location_type = 'place of interest'
 search = f"{location_type} in {location}"
 print(search)
-driver.get(f"https://www.google.com/maps/search/{search}")
+driver.get(f"https://www.google.com/maps/search/{search}?hl=en")
 
 features = {}
 load(features, OUTFILE)
@@ -46,7 +46,7 @@ while True:
             break
         search = f"{location_type} in {location}"
         print(search)
-        driver.get(f"https://www.google.com/maps/search/{search}")
+        driver.get(f"https://www.google.com/maps/search/{search}?hl=en")
     except KeyboardInterrupt:
         print("Interrupted by user, will now save")
         break
@@ -57,7 +57,7 @@ while True:
         with open("error.html", "w") as f:
             f.write(driver.page_source)
         # Restart
-        driver.get(f"https://www.google.com/maps/search/{search}")
+        driver.get(f"https://www.google.com/maps/search/{search}?hl=en")
 
 save(features, OUTFILE)
 
