@@ -39,7 +39,11 @@ while True:
         # Record that we've scraped this location
         df.scraped_at[df.name == location] = pd.Timestamp.now()
         df.to_csv("locations.csv", index=False)
-        location = next(locations)
+        try:
+            location = next(locations)
+        except StopIteration:
+            print("All locations complete")
+            break
         search = f"{location_type} in {location}"
         print(search)
         driver.get(f"https://www.google.com/maps/search/{search}")
