@@ -18,6 +18,7 @@ days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Satur
 def initialise_driver():
     chrome_options = Options()
     chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--window-size=800,600")
     driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
     driver.implicitly_wait(5)
     return driver
