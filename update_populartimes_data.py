@@ -5,6 +5,7 @@ from util import *
 from datetime import datetime, timedelta
 import dateutil.parser
 import time
+from pprint import pprint
 
 with open("data.geojson") as f:
     data = json.load(f)
@@ -17,7 +18,9 @@ try:
             #pprint_times(p["populartimes"])
             for retry in range(10):
                 try:
-                    popularity = get_populartimes_from_search(p["name"], p["address"])[2]
+                    result = get_populartimes_from_search(p["name"], p["address"])
+                    popularity = result[2]
+                    live_info = result[3]
                     break
                 except Exception as e:
                     print(f"ERROR for {p}: {e}, retrying in 1s")
@@ -30,6 +33,12 @@ try:
                 #pprint_times(popularity)
                 p["populartimes"] = popularity
                 p["scraped_at"] = datetime.now().isoformat(sep=" ", timespec="seconds")
+                if live_info:
+                    p["live_info"] = {
+                        "frequency": live_info,
+                        # Store a timestamp here too, as it's possible to get popularity info without live_info in future runs
+                        "scraped_at": p["scraped_at"]
+                    }
                 data["features"][i]["properties"] = p
 except KeyboardInterrupt:
     print("Interrupted by user, will now save")
