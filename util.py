@@ -18,7 +18,7 @@ days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Satur
 def initialise_driver():
     chrome_options = Options()
     chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--window-size=800,600")
+    chrome_options.add_argument("--window-size=1920,1080")
     driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
     driver.implicitly_wait(5)
     return driver
@@ -42,13 +42,19 @@ def extract_place(driver, features, name, link):
         print(f"No approx latlong in URL {link} for {name}")
         return
     try:
-        code = driver.find_element_by_css_selector("button[data-tooltip='Copy plus code']").text
+        code = driver.find_element_by_css_selector("button[aria-label^='Plus code:']").text
+        print(code)
         codeArea = olc.decode(olc.recoverNearest(code.split()[0], lat, lng))
         lat = codeArea.latitudeCenter
         lng = codeArea.longitudeCenter
     except NoSuchElementException:
         print("No plus code, latlong might be inaccurate")
         code = None
+    except StaleElementReferenceException:
+        # Try again
+        print("Got a StaleElementReferenceException when trying to get the plus code, trying again")
+        time.sleep(.1)
+        return extract_place(driver, features, name, link)
     driver.implicitly_wait(.1)
     address = None
     try:
@@ -96,6 +102,11 @@ def extract_place(driver, features, name, link):
     except NoSuchElementException:
         print("No popular times available")
         times = None
+    except StaleElementReferenceException:
+        # Try again
+        print("Got a StaleElementReferenceException when trying to get the popular times, trying again")
+        time.sleep(.1)
+        return extract_place(driver, features, name, link)
     feature = {
         "type": "Feature",
         "geometry": {
@@ -120,11 +131,11 @@ def extract_place(driver, features, name, link):
 def refreshPlaces(driver):
     places = []
     scrollCount = 0
-    while len(places) < 20 and scrollCount < 10:
+    while len(places) < 120 and scrollCount < 10:
         scrollCount += 1
         print("scrolling")
         driver.execute_script("arguments[0].scrollTo(0, arguments[0].scrollHeight)", driver.find_element_by_css_selector("div[aria-label^='Results for']"))
-        time.sleep(.5)
+        time.sleep(1)
         places = driver.find_elements_by_css_selector("div[aria-label^='Results for'] a[aria-label]")
     if not places:
         print("No places")
@@ -132,33 +143,20 @@ def refreshPlaces(driver):
     return places
 
 def extract_page(driver, features):
-    placesNeedsRefresh = True
-    for i in tqdm(range(20)):
+    places = refreshPlaces(driver)
+    for place in tqdm(places):
         try:
-            # multiple results
-            # Only refresh places if necessary. This is more efficient when skipping over already extracted places
-            if placesNeedsRefresh:
-                places = refreshPlaces(driver)
-            place = places[i]
             name = place.get_attribute('aria-label')
             link = place.get_attribute("href")
+            if name.startswith("Ad ·"):
+                # Don't click on Ads
+                continue
             if link in features:
                 print(f"Skipping {name}")
                 continue
             print(f"Clicking on {name}")
             click(driver, place)
-            placesNeedsRefresh = True
             extract_place(driver, features, name, link)
-            for retry in range(5):
-                try:
-                    driver.find_element_by_css_selector('button[aria-label="Back"]').click()
-                    break
-                except:
-                    print(retry)
-                    if retry == 4:
-                        raise
-                    else:
-                        time.sleep(retry)
         except NoSuchElementException:
             # Single result
             try:

@@ -23,18 +23,7 @@ load(features, OUTFILE)
 while True:
     try:
         extract_page(driver, features)
-        if driver.find_element_by_css_selector("button[aria-label=' Next page ']").get_attribute("disabled"):
-            raise IndexError
-        click(driver, driver.find_element_by_css_selector("button[aria-label=' Next page ']"))
-        print("Going to next page")
-        time.sleep(2)
-    except IndexError:
-        try:
-            next_page = driver.find_element_by_css_selector("button[aria-label=' Next page ']")
-            print(f'Next page button disabled: {next_page.get_attribute("disabled")}')
-        except:
-            pass
-        print("All done!")
+        print(f"Got all places for {location}")
         save(features, OUTFILE)
         # Record that we've scraped this location
         df.scraped_at[df.name == location] = pd.Timestamp.now()
@@ -51,6 +40,7 @@ while True:
         print("Interrupted by user, will now save")
         break
     except Exception as e:
+        # Some other Exception - try reload the whole page and start over
         print(f"ERROR: {e}")
         import traceback
         traceback.print_exc()
