@@ -4,6 +4,7 @@ from datetime import datetime
 from selenium import webdriver
 from selenium.common.exceptions import *
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from openlocationcode import openlocationcode as olc
 from tqdm import tqdm
@@ -42,7 +43,7 @@ def extract_place(driver, features, name, link):
         print(f"No approx latlong in URL {link} for {name}")
         return
     try:
-        code = driver.find_element_by_css_selector("button[aria-label^='Plus code:']").text
+        code = driver.find_element(By.CSS_SELECTOR, "button[aria-label^='Plus code:']").text
         print(code)
         codeArea = olc.decode(olc.recoverNearest(code.split()[0], lat, lng))
         lat = codeArea.latitudeCenter
@@ -58,22 +59,22 @@ def extract_place(driver, features, name, link):
     driver.implicitly_wait(.1)
     address = None
     try:
-        address = driver.find_element_by_css_selector("button[data-tooltip='Copy address']").get_attribute("aria-label").split(":")[-1].strip()
+        address = driver.find_element(By.CSS_SELECTOR, "button[data-tooltip='Copy address']").get_attribute("aria-label").split(":")[-1].strip()
     except NoSuchElementException:
         pass
     category = None
     try:
-        category = driver.find_element_by_css_selector("button[jsaction='pane.rating.category']").text
+        category = driver.find_element(By.CSS_SELECTOR, "button[jsaction='pane.rating.category']").text
     except NoSuchElementException:
         pass
     live_info = None
     try:
-        popular = driver.find_element_by_css_selector("div[aria-label^='Popular times']")
+        popular = driver.find_element(By.CSS_SELECTOR, "div[aria-label^='Popular times']")
         print("Has popular times")
         times = [[0]*24 for _ in range(7)] # 2D matrix, 7 days of the week, 24h per day
         dow = 0
         hour_prev = 0
-        for elem in driver.find_elements_by_css_selector("div[aria-label*='busy']"):
+        for elem in driver.find_elements(By.CSS_SELECTOR, "div[aria-label*='busy']"):
             bits = elem.get_attribute("aria-label").split()
             if bits[0] == "%":
                 # Closed on this day
@@ -134,9 +135,9 @@ def refreshPlaces(driver):
     while len(places) < 120 and scrollCount < 10:
         scrollCount += 1
         print("scrolling")
-        driver.execute_script("arguments[0].scrollTo(0, arguments[0].scrollHeight)", driver.find_element_by_css_selector("div[aria-label^='Results for']"))
+        driver.execute_script("arguments[0].scrollTo(0, arguments[0].scrollHeight)", driver.find_element(By.CSS_SELECTOR, "div[aria-label^='Results for']"))
         time.sleep(1)
-        places = driver.find_elements_by_css_selector("div[aria-label^='Results for'] a[aria-label]")
+        places = driver.find_elements(By.CSS_SELECTOR, "div[aria-label^='Results for'] a[aria-label]")
     if not places:
         print("No places")
         raise IndexError
@@ -160,7 +161,7 @@ def extract_page(driver, features):
         except NoSuchElementException:
             # Single result
             try:
-                name = driver.find_element_by_css_selector("h1[class*='header-title-title']").text
+                name = driver.find_element(By.CSS_SELECTOR, "h1[class*='header-title-title']").text
                 if name:
                     print(f"Found {name}")
                     link = driver.current_url
