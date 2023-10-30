@@ -136,43 +136,40 @@ def refreshPlaces(driver):
     while len(places) < 120 and scrollCount < 10:
         scrollCount += 1
         print("scrolling")
-        driver.execute_script("arguments[0].scrollTo(0, arguments[0].scrollHeight)", driver.find_element(By.CSS_SELECTOR, "div[aria-label^='Results for']"))
+        driver.execute_script("arguments[0].scrollTo(0, arguments[0].scrollHeight)", driver.find_element(By.CSS_SELECTOR, "div[aria-label^='Results']"))
         time.sleep(1)
-        places = driver.find_elements(By.CSS_SELECTOR, "div[aria-label^='Results for'] a[aria-label]")
+        places = driver.find_elements(By.CSS_SELECTOR, "div[aria-label^='Results'] a[aria-label]")
     if not places:
         print("No places")
         raise IndexError
     return places
 
 def extract_page(driver, features):
-    places = refreshPlaces(driver)
-    for place in tqdm(places):
-        try:
-            name = place.get_attribute('aria-label')
-            link = place.get_attribute("href")
-            if name.startswith("Ad ·"):
-                # Don't click on Ads
-                continue
-            if link in features:
-                print(f"Skipping {name}")
-                continue
-            print(f"Clicking on {name}")
-            click(driver, place)
+    try:
+        places = refreshPlaces(driver)
+    except NoSuchElementException:
+        # Single result
+        name = driver.find_element(By.CSS_SELECTOR, "h1").text
+        print(f"Found {name}")
+        link = driver.current_url
+        if link in features:
+            print(f"Skipping {name}")
+        else:
             extract_place(driver, features, name, link)
-        except NoSuchElementException:
-            # Single result
-            try:
-                name = driver.find_element(By.CSS_SELECTOR, "h1[class*='header-title-title']").text
-                if name:
-                    print(f"Found {name}")
-                    link = driver.current_url
-                    if link in features:
-                        print(f"Skipping {name}")
-                    else:
-                        extract_place(driver, features, name, link)
-            except:
-                pass
-            raise IndexError
+        return
+
+    for place in tqdm(places):
+        name = place.get_attribute('aria-label')
+        link = place.get_attribute("href")
+        if name.startswith("Ad ·"):
+            # Don't click on Ads
+            continue
+        if link in features:
+            print(f"Skipping {name}")
+            continue
+        print(f"Clicking on {name}")
+        click(driver, place)
+        extract_place(driver, features, name, link)
 
 def load(features, OUTFILE):
     if os.path.isfile(OUTFILE):
