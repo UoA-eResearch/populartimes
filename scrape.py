@@ -3,30 +3,33 @@
 from util import *
 import pandas as pd
 
-OUTFILE = "data.geojson"
+OUTFILE = "cafes.geojson"
 df = pd.read_csv("locations.csv")
 # Ignore locations that have already been scraped
-locations = df.name[pd.isna(df.scraped_at)]
+locations = df.name[df.n_places.isna()]
 print(f"Have {len(locations)} locations")
 locations = iter(tqdm(locations))
 
 driver = initialise_driver()
 location = next(locations)
-location_type = 'place of interest'
+location_type = 'cafes'
 search = f"{location_type} in {location}"
 print(search)
-driver.get(f"https://www.google.com/maps/search/{search}?hl=en")
+url = f"https://www.google.com/maps/search/{search}?hl=en"
+print(url)
+driver.get(url)
 
 features = {}
 load(features, OUTFILE)
 
 while True:
     try:
-        extract_page(driver, features)
-        print(f"Got all places for {location}")
+        n_places = extract_page(driver, features)
+        print(f"Got {n_places} places for {location}")
         save(features, OUTFILE)
         # Record that we've scraped this location
         df.scraped_at[df.name == location] = pd.Timestamp.now()
+        df.n_places[df.name == location] = n_places
         df.to_csv("locations.csv", index=False)
         try:
             location = next(locations)
@@ -44,8 +47,12 @@ while True:
         print(f"ERROR: {e}")
         import traceback
         traceback.print_exc()
-        with open("error.html", "w") as f:
-            f.write(driver.page_source)
+        try:
+            with open("error.html", "w") as f:
+                f.write(driver.page_source)
+                driver.save_screenshot("error.png")
+        except:
+            print("can't even write error.html...")
         # Restart
         driver.get(f"https://www.google.com/maps/search/{search}?hl=en")
 

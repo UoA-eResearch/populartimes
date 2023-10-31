@@ -45,7 +45,7 @@ def extract_place(driver, features, name, link):
         return
     try:
         code = driver.find_element(By.CSS_SELECTOR, "button[aria-label^='Plus code:']").text
-        print(code)
+        print(f"Plus code: {code}")
         codeArea = olc.decode(olc.recoverNearest(code.split()[0], lat, lng))
         lat = codeArea.latitudeCenter
         lng = codeArea.longitudeCenter
@@ -156,7 +156,7 @@ def extract_page(driver, features):
             print(f"Skipping {name}")
         else:
             extract_place(driver, features, name, link)
-        return
+        return 1
 
     for place in tqdm(places):
         name = place.get_attribute('aria-label')
@@ -170,6 +170,7 @@ def extract_page(driver, features):
         print(f"Clicking on {name}")
         click(driver, place)
         extract_place(driver, features, name, link)
+    return len(places)
 
 def load(features, OUTFILE):
     if os.path.isfile(OUTFILE):
