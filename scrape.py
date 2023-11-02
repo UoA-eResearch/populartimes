@@ -53,6 +53,7 @@ while True:
                 driver.save_screenshot("error.png")
         except:
             print("can't even write error.html...")
+            driver = initialise_driver()
         # Restart
         driver.get(f"https://www.google.com/maps/search/{search}?hl=en")
 
