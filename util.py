@@ -109,6 +109,9 @@ def extract_place(driver, features, name, link):
         print("Got a StaleElementReferenceException when trying to get the popular times, trying again")
         time.sleep(.1)
         return extract_place(driver, features, name, link)
+    except ValueError:
+        print("Got a ValueError when trying to get the popular times")
+        times = None
     feature = {
         "type": "Feature",
         "geometry": {
