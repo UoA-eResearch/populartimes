@@ -10,6 +10,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/leaflet-providers@1.3.0/leaflet-providers.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css" />
+    <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
+    <script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.1.4/leaflet-maplibre-gl.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
         html,
@@ -43,15 +46,16 @@
             worldCopyJump: true,
             zoomControl: false,
             center: [-36.8862, 174.7651],
-            zoom: 12
+            zoom: 12,
+            maxZoom: 19
         })
 
         var placesWithPopularTimes = L.layerGroup();
         var placesWithoutPopularTimes = L.layerGroup();
 
         var baseMaps = {
-            "CartoDB Positron": L.tileLayer.provider('CartoDB.Positron').addTo(map),
-            "CartoDB Dark Matter": L.tileLayer.provider("CartoDB.DarkMatter"),
+            "OpenFreeMap Positron": L.maplibreGL({style: 'https://tiles.openfreemap.org/styles/positron'}).addTo(map),
+            "OpenFreeMap Dark": L.maplibreGL({style: "https://tiles.openfreemap.org/styles/dark"}),
         }
         var overlayMaps = {
             "Places with popular times": L.layerGroup().addTo(map),
